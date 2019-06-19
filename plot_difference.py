@@ -15,11 +15,11 @@ def default_style(func):
 	def wrapper(*args, **kwargs):
 		fig = plt.figure(figsize=(16,10))
 		sns.set_context("talk", font_scale=0.9)
-		plt.xlim(-2, 2)
 		plt.tick_params(grid_alpha=0.2)
 		func(*args, **kwargs)
 		plt.clf()
 	return wrapper
+
 
 @default_style
 def stripplot(df):
@@ -28,6 +28,7 @@ def stripplot(df):
    bp = sns.swarmplot(x='value', y='atom', data=df, hue='variable', 
                       palette=sns.color_palette("coolwarm", len(df.variable.unique())))
    bp.figure.savefig('stripplot.png')
+
    
 @default_style
 def cumulative_plot(df):
@@ -39,11 +40,11 @@ def cumulative_plot(df):
    p.figure.savefig('cumulative.png')
 
 
-
 @default_style
 def main():
-   df_con = pd.read_csv('constrained_vs_rhoref.csv', decimal=',')
-   df_uncon = pd.read_csv('unconstrained_vs_rhoref.csv', decimal=',')
+   print('Reading Data ...')
+   df_con = pd.read_csv('constrained_vs_rhoref.csv', decimal='.')
+   df_uncon = pd.read_csv('unconstrained_vs_rhoref.csv', decimal='.')
    dfs = [df_con, df_uncon]
    for df in dfs:
       df = df.set_index(['residue', 'atom'])
@@ -57,8 +58,10 @@ def main():
       diff_df[str(i)] = (df_con[str(i)] - df_uncon[str(i)])**2
    df = diff_df
 
+   print('Plotting ...')
    stripplot(df)
    cumulative_plot(df)
+   print('Done.')
    
 
 if __name__ == '__main__':
