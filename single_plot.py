@@ -24,16 +24,20 @@ def default_style(func):
    
 @default_style
 def cumulative_plot(df, plotname='cumulative.png'):
-   p = plt.plot(df.index, df.values, marker='o')
-   print(df.index.tolist())
-   print(df.values)
+   x = df.index.tolist()
+   y = df.values
+   x = [int(i) for i in x]
+   print(x)
+   print(y)
+   p = plt.plot(x, y, marker='o')
    plt.xlabel('lnrhoref')
    plt.ylabel('sqrt{(q_con - q_uncon)^2 /N} [e]')
    plt.savefig(plotname)
 
 def calc_diff(df):
    df = df.mean().apply(np.sqrt)
-   df = df.sort_index(ascending=False)
+   df.index = df.index.map(int)
+   df = df.sort_index(ascending=True)
    return df
 
 def parse_data(constr_file, unconstr_file):
