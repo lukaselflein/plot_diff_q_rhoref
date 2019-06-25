@@ -54,7 +54,7 @@ def parse_data(constr_file, unconstr_file):
    diff_df['atom'] = df_con.atom
    diff_df['residue'] = df_con.residue
    for i in range(-3, -10, -1):
-      #diff_df[str(i)] = (df_con[str(i)] - df_uncon[str(i)]).abs()
+      # diff_df[str(i)] = (df_con[str(i)] - df_uncon[str(i)]).abs()
       diff_df[str(i)] = (df_con[str(i)] - df_uncon[str(i)])**2
    return diff_df
 
@@ -70,7 +70,6 @@ def compare_plot(df, plotname='cumulative.png'):
    p = sns.pointplot(x='lnrho', y='diff', hue='q', data=df)
    ax = p.axes
 #   ax.set_ylim(df['diff'].min() - 0.05, 0.4)
-   #plt.xlabel('lnrhoref')
    plt.ylabel('sqrt{(q_con - q_uncon)^2 /N} [e]')
    p.figure.savefig('img/' + plotname)
 
