@@ -60,16 +60,16 @@ def parse_data(constr_file, unconstr_file):
 
 
 def calc_diff(df):
-      df = df.mean().apply(np.sqrt)
-      df = df.sort_index(ascending=False)
-      return df
+   df = df.mean().apply(np.sqrt)
+   df = df.sort_index(ascending=False)
+   return df
 
 @default_style
 def compare_plot(df, plotname='cumulative.png'):
    print('Plotting {}'.format(plotname))
    p = sns.pointplot(x='lnrho', y='diff', hue='q', data=df)
    ax = p.axes
-   ax.set_ylim(df['diff'].min() - 0.05, 0.4)
+#   ax.set_ylim(df['diff'].min() - 0.05, 0.4)
    #plt.xlabel('lnrhoref')
    plt.ylabel('sqrt{(q_con - q_uncon)^2 /N} [e]')
    p.figure.savefig('img/' + plotname)
@@ -100,6 +100,7 @@ def main():
    df['lnrho'] = df.index
    df = df.melt(id_vars=['lnrho'], var_name='q', value_name='diff')
    df['q'] = df['q'].astype(int)
+   df['lnrho'] = df['lnrho'].astype(int)
    compare_plot(df, plotname='lnrho_q_comparison.png')
 
    print('Done.')
