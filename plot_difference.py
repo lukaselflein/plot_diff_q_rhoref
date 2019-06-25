@@ -32,10 +32,12 @@ def stripplot(df):
    
 @default_style
 def cumulative_plot(df, plotname='cumulative.png'):
-   p = df.plot(marker='o')
+   p = plt.plot(df.index, df.values, marker='o')
+   print(df.index.tolist())
+   print(df.values)
    plt.xlabel('lnrhoref')
    plt.ylabel('sqrt{(q_con - q_uncon)^2 /N} [e]')
-   p.figure.savefig('img/' + plotname)
+   plt.savefig('img/' + plotname)
 
 def parse_data(constr_file, unconstr_file):
    print('Reading files {}, {}'.format(constr_file, unconstr_file))
